@@ -27,4 +27,27 @@ class Movimiento extends Model
     {
         return $this->belongsTo(Categoria::class);
     }
-}
+
+    protected static function booted()
+    {
+        static::created(function ($movimiento) {
+            if ($movimiento->tipo === 'gasto') {
+                // Si es un gasto, decrementamos el monto del presupuesto del usuario
+                $presupuesto = Presupuesto::where('user_id', $movimiento->user_id)
+                    ->where('categoria_id', $movimiento->categoria_id)
+                    ->where('mes', now()->format('F'))
+                    ->where('anio', now()->year)
+                    ->first();
+
+                if ($presupuesto) {
+                    $presupuesto->monto_gastado += $movimiento->monto;
+                    $presupuesto->save();       
+
+           } 
+        }
+        });
+    
+
+    }
+}   
+

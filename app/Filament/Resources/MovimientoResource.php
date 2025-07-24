@@ -23,7 +23,7 @@ class MovimientoResource extends Resource
 {
     protected static ?string $model = Movimiento::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
     public static function form(Form $form): Form
     {
@@ -127,7 +127,7 @@ class MovimientoResource extends Resource
                 Tables\Actions\EditAction::make()
                 ->button()
                 ->color('success'),
-            Tables\Actions\DeleteAction::make()
+                Tables\Actions\DeleteAction::make()
                     ->button()
                     ->color('danger')
                     ->successNotification(
